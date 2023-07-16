@@ -9,6 +9,10 @@ app.use(express.urlencoded({ extended: true })) // for form data
 const hostname = process.env.HOST_NAME || 8888;
 const port = process.env.PORT || 8888;
 
+// routes 
+const authRoutes = require('./routes/auth')
+app.use('/v1/auth',authRoutes);
+
 // for View
 const configViewEngine = require('./config/viewEngine.js');
 configViewEngine(app);
@@ -17,8 +21,9 @@ configViewEngine(app);
 const connection = require ("../src/config/database");
 connection();
 
+
 app.get('/', (req, res) => {
-    res.send("hello World! ");
+    res.send("Hello Cao Minh! ");
 })
 
 app.listen(port,hostname, () => {
