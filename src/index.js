@@ -1,31 +1,16 @@
-const express = require('express')
-const app = express()
-require('dotenv').config();
+const express = require("express");
+const app = express();
 
-// config request.body
-app.use(express.json()) // for json
-app.use(express.urlencoded({ extended: true })) // for form data
+app.get("/api/data", (req, res) => {
+  const jsonData = {
+    name: "John Doe",
+    age: 30,
+    email: "johndoe@example.com"
+  };
 
-const hostname = process.env.HOST_NAME || 8888;
-const port = process.env.PORT || 8888;
+  res.json(jsonData);
+});
 
-// routes 
-const authRoutes = require('./routes/auth')
-app.use('/v1/auth',authRoutes);
-
-// for View
-const configViewEngine = require('./config/viewEngine.js');
-configViewEngine(app);
-
-//connection
-const connection = require ("../src/config/database");
-connection();
-
-
-app.get('/', (req, res) => {
-    res.send("Hello Cao Minh! ");
-})
-
-app.listen(port,hostname, () => {
-    console.log(`Example app listening on port http://${hostname}:${port}/`)
-})
+app.listen(3000, () => {
+  console.log("Server is running on port 3000");
+});
