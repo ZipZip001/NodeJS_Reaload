@@ -1,12 +1,26 @@
 const express = require('express')
-
 const app = express()
-const port = 8080
+require('dotenv').config();
+
+// config request.body
+app.use(express.json()) // for json
+app.use(express.urlencoded({ extended: true })) // for form data
+
+const hostname = process.env.HOST_NAME || 8888;
+const port = process.env.PORT || 8888;
+
+// for View
+const configViewEngine = require('./config/viewEngine.js');
+configViewEngine(app);
+
+//connection
+const connection = require ("../src/config/database");
+connection();
 
 app.get('/', (req, res) => {
     res.send("hello World! ");
 })
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+app.listen(port,hostname, () => {
+    console.log(`Example app listening on port http://${hostname}:${port}/`)
 })
